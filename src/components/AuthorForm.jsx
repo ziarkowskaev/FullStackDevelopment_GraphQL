@@ -6,7 +6,14 @@ const AuthorForm = ({setError}) => {
   const [name, setName] = useState('')
   const [born, setBorn] = useState(0)
 
-  const [ updateAuthor, result] = useMutation(UPDATE_AUTHOR)
+  const [ updateAuthor, result] = useMutation(UPDATE_AUTHOR,{
+    //make sure that the Author  views are kept up to date after author is updated
+    refetchQueries: [{query:ALL_AUTHORS}],
+    onError: (error => {
+      const messages = error.graphQLErrors.map(e => e.message).join('\n')
+      setError(messages)
+    })
+  })
 
   useEffect(() => {
     if (result.data && result.data.editAuthor === null) {
@@ -17,10 +24,8 @@ const AuthorForm = ({setError}) => {
   const submit = async (event) => {
     event.preventDefault()
 
-    console.log('Submitting with variables:', { name, setBornTo: born });
-
     updateAuthor({ variables: { name, setBornTo: born } })
-    
+
     setName('')
     setBorn(0)
   }
