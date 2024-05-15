@@ -1,12 +1,31 @@
 import { useState, useEffect } from 'react'
 import { useMutation } from '@apollo/client'
 import { UPDATE_AUTHOR } from '../queries'
+import { ALL_AUTHORS } from '../queries';
+import Select from 'react-select';
 
-const AuthorForm = ({setError}) => {
+const AuthorForm = ({setError,authors}) => {
   const [name, setName] = useState('')
   const [born, setBorn] = useState(0)
+  const [selectedOption, setSelectedOption] = useState(null);
 
-  const [ updateAuthor, result] = useMutation(UPDATE_AUTHOR)
+
+//for defining all authors options based on the authors array
+  function forOption(author) {
+    return {value:author.name, label:author.name};
+  }
+  const options = authors.map(forOption)
+
+
+
+  const [ updateAuthor, result] = useMutation(UPDATE_AUTHOR,{
+    //make sure that the Author  views are kept up to date after author is updated
+    refetchQueries: [{query:ALL_AUTHORS}],
+    onError: (error => {
+      const messages = error.graphQLErrors.map(e => e.message).join('\n')
+      setError(messages)
+    })
+  })
 
   useEffect(() => {
     if (result.data && result.data.editAuthor === null) {
@@ -17,11 +36,8 @@ const AuthorForm = ({setError}) => {
   const submit = async (event) => {
     event.preventDefault()
 
-    console.log('Submitting with variables:', { name, setBornTo: born });
-
-    updateAuthor({ variables: { name, setBornTo: born } })
-    
-    setName('')
+    updateAuthor({ variables: { name: selectedOption.value, setBornTo: born } })
+    setSelectedOption(null)
     setBorn(0)
   }
 
@@ -30,12 +46,13 @@ const AuthorForm = ({setError}) => {
       <h2>Set year birth</h2>
 
       <form onSubmit={submit}>
-        <div>
-          name <input
-            value={name}
-            onChange={({ target }) => setName(target.value)}
+      <div>
+        <Select 
+            defaultValue={selectedOption}
+            onChange={setSelectedOption}
+            options={options}
           />
-        </div>
+      </div>
         <div>
           born <input
             type="number"

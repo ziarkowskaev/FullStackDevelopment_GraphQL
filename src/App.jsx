@@ -39,7 +39,7 @@ const App = () => {
       {page === "add" && (<NewBook show={page === "add"}  setError={notify} />)}
       
       <Authors show={page === "authors"} authors={resultsA.data.allAuthors} />
-      <AuthorForm show={page === "authors"} setError={notify}/>
+      <AuthorForm show={page === "authors"} authors={resultsA.data.allAuthors} setError={notify}/>
 
       <Books show={page === "books"} books={resultsB.data.allBooks} />
 
