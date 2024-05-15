@@ -195,7 +195,7 @@ const resolvers = {
 
         //author is not in the database
         if(!author){
-          null
+          return null
         }
 
         const updatedAuthor = {name: author.name, born:args.setBornTo}
