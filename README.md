@@ -1,4 +1,4 @@
-The Full Stack application for viewing authors and their books. 
+# The Full Stack application for viewing authors and their books. 
 
 ## Server
 Implemeted using GraphQL
