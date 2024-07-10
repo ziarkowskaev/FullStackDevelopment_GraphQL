@@ -1,11 +1,11 @@
-import { useQuery } from '@apollo/client'
-import { ALL_AUTHORS } from '../queries'
+import { useQuery } from "@apollo/client";
+import { ALL_AUTHORS } from "../queries";
 
 const Authors = (props) => {
   if (!props.show) {
-    return null
+    return null;
   }
-  const authors = props.authors
+  const authors = props.authors;
 
   return (
     <div>
@@ -27,7 +27,7 @@ const Authors = (props) => {
         </tbody>
       </table>
     </div>
-  )
-}
+  );
+};
 
-export default Authors
+export default Authors;
