@@ -100,7 +100,7 @@ const resolvers = {
         }
       } else if (args.genres) {
       } else {
-        return Book.find().populate("author").exec();
+        return Book.find({}).populate("author").exec();
       }
     },
     allAuthors: async () => {
