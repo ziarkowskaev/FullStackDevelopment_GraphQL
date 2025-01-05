@@ -41,28 +41,59 @@ const AuthorForm = ({ setError, authors }) => {
   };
 
   return (
-    <div>
-      <h2>Set year birth</h2>
+<div style={{ display: 'flex', flexDirection: 'column', padding: '2rem'}}>
+  <h2 style={{ fontSize: '2rem', marginBottom: '1rem', fontWeight: '600' }}>Set Author's Year of Birth</h2>
 
-      <form onSubmit={submit}>
-        <div>
-          <Select
-            defaultValue={selectedOption}
-            onChange={setSelectedOption}
-            options={options}
-          />
-        </div>
-        <div>
-          born{" "}
-          <input
-            type="number"
-            value={born}
-            onChange={({ target }) => setBorn(Number(target.value))}
-          />
-        </div>
-        <button type="submit">Update Author</button>
-      </form>
+  <form onSubmit={submit} style={{ backgroundColor: '#fff', padding: '2rem', borderRadius: '0.5rem', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', width: '100%', maxWidth: '400px', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <Select
+        defaultValue={selectedOption}
+        onChange={setSelectedOption}
+        options={options}
+        style={{ padding: '0.75rem', fontSize: '1rem', border: '1px solid #ced4da', borderRadius: '0.25rem' }}
+      />
     </div>
+
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <label htmlFor="born" style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '0.5rem' }}>Born</label>
+      <input
+        id="born"
+        type="number"
+        value={born}
+        onChange={({ target }) => setBorn(Number(target.value))}
+        style={{
+          padding: '0.75rem',
+          fontSize: '1rem',
+          border: '1px solid #ced4da',
+          borderRadius: '0.25rem',
+          marginTop: '0.5rem',
+          width: '100%',
+          transition: 'border-color 0.2s ease'
+        }}
+      />
+    </div>
+
+    <button
+      type="submit"
+      style={{
+        padding: '0.75rem',
+        fontSize: '1rem',
+        fontWeight: 600,
+        color: '#fff',
+        backgroundColor: '#007bff',
+        border: 'none',
+        borderRadius: '0.25rem',
+        cursor: 'pointer',
+        transition: 'background-color 0.2s ease',
+        width: '100%',
+        marginTop: '1rem'
+      }}
+    >
+      Update Author
+    </button>
+  </form>
+</div>
+
   );
 };
 
